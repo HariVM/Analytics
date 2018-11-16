@@ -62,8 +62,53 @@ t(m2)
 m1
 sweep(m1,MARGIN = 1, STATS = c(2,3,4,5), FUN = "+") #rowwise - margin=1
 sweep(m1,MARGIN = 2, STATS = c(2,3,4), FUN = "+") #colwise - margin=2
-
 addmargins(m1,margin = 1,sum) #add sum to bottom
 
 addmargins(m1,c(1,2),sum)   #add sum to bottom and right
 
+
+#DataFrame----
+#create vectors to be combined into DF
+(rollno = 1:30)
+(sname = paste('student',1:30,sep = ''))
+(gender = sample(c('M','F'), size=30, replace=T, prob = c(.7,.3)))    # works best for large sample size
+(marks1=floor(rnorm(30, mean=50, sd = 10)))
+(marks2=ceiling(rnorm(30, 40, 5)))
+(course = sample(c('BBA','MBA'), size = 30, replace = T, prob = c(.5,.5)))
+
+rollno;sname;gender
+marks1;marks2;course
+
+#create dataframe
+df1=data.frame(rollno,sname,gender,marks1,marks2,course, stringsAsFactors = F)
+str(df1) #structure of df
+head(df1) #top 6 rows
+head(df1, n=3) #top 3 rows
+tail(df1) #last 6 rows
+class(df1)
+summary(df1)
+df1
+df1$gender = factor(df1$gender)
+df1$course = factor(df1$course)
+str(df1)
+summary(df1)
+df1$gender #only gender column
+head(df1[,c(2,4)]) #multiple columns
+df1[1:5, 1:4]
+#conditional
+df1[marks1>50 & gender=='F', ]
+df1[marks1>50 & gender=='F', ][3:5]
+
+names(df1); dim(df1) # names and dimension
+
+aggregate(df1$marks1, by=list(df1$gender,df1$course), FUN=sum)
+aggregate(df1$marks1, by=list(df1$gender), FUN=sum)
+aggregate(marks1 ~ gender, data = df1, FUN = max)
+aggregate(cbind(marks1,marks2)~gender, data=df1, FUN = max)
+
+(df2=aggregate(cbind(marks1,marks2)~gender + course, data=df1, FUN = max))
+
+
+#Factor----
+
+(grad)
