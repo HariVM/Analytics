@@ -1,5 +1,5 @@
 # Association Rules - Groceries data set ####
-
+library(Matrix)
 library(arules)  #install first
 library(arulesViz) #install first
 library(datasets)  # no need to install, just load it reqd for Groceries
@@ -13,7 +13,7 @@ arules::LIST(Groceries[1:6])  #another view
 arules::inspect(Groceries[1:5])
 
 #Find Frequent Itemset
-frequentItems = eclat (Groceries, parameter = list(supp = 0.01, minlen= 2, maxlen = 5)) 
+frequentItems = eclat (Groceries, parameter = list(supp = 0.01, minlen= 3, maxlen = 5)) 
 inspect(frequentItems[1:10])
 frequentItems
 inspect(frequentItems[10:100])
